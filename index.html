@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Jeu de dés</title>
+  <style>
+    body {
+      font-family: sans-serif;
+    }
+    button {
+      font-size: 20px;
+      padding: 10px;
+      margin-right: 10px;
+    }
+    #result {
+      font-size: 24px;
+      margin-top: 20px;
+    }
+    .win {
+      color: green;
+      font-weight: bold;
+    }
+    .lose {
+      color: red;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Jeu de dés</h1>
+  <p>
+    Cliquez sur les boutons pour lancer les dés.
+  </p>
+  <p>
+    <button id="roll1">Lancer dé 1</button>
+    <button id="roll2">Lancer dé 2</button>
+  </p>
+  <p>
+    Total des dés : <span id="total"></span>
+  </p>
+  <p>
+    <button id="play">Jouer</button>
+  </p>
+  <p id="result"></p>
+  <p id="message"></p>
+  
+  <script>
+    // Fonction pour lancer un dé
+    function rollDie() {
+      return Math.floor(Math.random() * 6) + 1;
+    }
+    
+    // Variables pour stocker les résultats des dés
+    var die1 = 0;
+    var die2 = 0;
+    
+    // Variables pour stocker le total et le résultat du jeu
+    var total = 0;
+    var result = null;
+    
+    // Fonction pour mettre à jour l'affichage du total
+    function updateTotal() {
+      document.getElementById("total").textContent = total;
+    }
+    
+    // Fonction pour mettre à jour l'affichage du résultat
+    function updateResult() {
+      var resultElement = document.getElementById("result");
+      resultElement.textContent = result;
+      if (result === "Gagné !") {
+        resultElement.classList.add("win");
+      } else if (result === "Perdu !") {
+        resultElement.classList.add("lose");
+      }
+    }
+    
+    // Fonction pour jouer un nouveau jeu
+    function newGame() {
+      // Réinitialiser les variables
+      die1 = 0;
+      die2 = 0;
+      total = 0;
+      result = null;
+      // Réinitialiser l'affichage
+      document.getElementById("total").textContent = "";
+      document.getElementById("result").textContent = "";
+      document.getElementById("result").classList.remove("win", "lose");
+      // Activer les boutons
+      document.getElementById("roll1").disabled = false;
+      document.getElementById("roll2").disabled = false;
+      document.getElementById("play").disabled = false;
+    }
+    
+    // Gérer le clic sur le bouton "Lancer dé 1"
+    document.getElementById("roll1").addEventListener("click", function() {
+      die1 = rollDie();
+      //alert("Dé 1 : " + die1);
+       document.getElementById("result").innerHTML = die1
+    });
+    
+    // Gérer le clic sur le bouton "Lancer dé 2"
+    document.getElementById("roll2").addEventListener("click", function() {
+      die2 = rollDie();
+      //alert("Dé 2 : " + die2);
+      document.getElementById("result").innerHTML = die2
+    });
+    
+    // Gérer le clic sur le bouton "Jouer"
+    document.getElementById("play").addEventListener("click", function() {
+      // Calculer le total
+      total = die1 + die
+  if (total > 6) {
+    result = "Gagné !";
+    //document.getElementById("message").innerHTML = result
+  } else {
+    result = "Perdu !";
+    //document.getElementById("message").innerHTML = result
+  }
+  
+  // Mettre à jour l'affichage du total et du résultat
+  updateTotal();
+  updateResult();
+  // Désactiver les boutons
+  document.getElementById("roll1").disabled = true;
+  document.getElementById("roll2").disabled = true;
+  document.getElementById("play").disabled = true;
+  // Proposer un nouveau jeu
+  var newGameButton = document.createElement("button");
+  newGameButton.textContent = "Nouveau jeu";
+  newGameButton.addEventListener("click", function() {
+    // Calculer le résultat du nouveau jeu
+    var winProbability = 0.5; // Probabilité de gagner
+    if (Math.random() < winProbability) {
+      result = "Gagné !";
+      total = Math.floor(total * 0.2); // Rabais de 20%
+    } else {
+      result = "Perdu !";
+    }
+    // Mettre à jour l'affichage du total et du résultat
+    updateTotal();
+    updateResult();
+    // Remplacer le bouton "Nouveau jeu" par un nouveau bouton "Jouer"
+    this.parentNode.removeChild(this);
+    var playButton = document.createElement("button");
+    playButton.textContent = "Jouer";
+    playButton.addEventListener("click", newGame);
+    document.getElementById("play").parentNode.appendChild(playButton);
+  });
+  document.getElementById("play").parentNode.appendChild(newGameButton);
+});
+
+
+ </script>
+</body>
+</html>
